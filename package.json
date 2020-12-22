@@ -17,8 +17,10 @@
     "eslint-plugin-import": "^2.22.1"
   },
   "scripts": {
-    "prepublish": "npm run compile",
-    "start": "ts-node main.ts"
+    "release": "npm version patch && npm publish",
+    "minorrelease": "npm version minor && npm publish",
+    "start": "ts-node main.ts",
+    "build": "tsc"
     },
   "repository": {
     "type": "git",
