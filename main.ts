@@ -1,7 +1,10 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+
 import fetch from 'node-fetch';
 import { ITokenGenerateBodyReq } from './interface';
 
-const toastBasicEndpoint = '${toast_basic_endpoint}';
+const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
 const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
 export default class toastPushApi {
   appKey: string;
@@ -15,7 +18,7 @@ export default class toastPushApi {
 
   // token generate
   async generateToken(body:ITokenGenerateBodyReq) {
-    await fetch(`${toastBasicEndpoint}/push/v2.4/appkeys/${this.appKey}/tokens`, {
+    await fetch(`${toastBasicEndpoint}${this.appKey}/tokens`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
