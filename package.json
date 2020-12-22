@@ -1,7 +1,7 @@
 {
   "name": "nhn-toast-push-api",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "NHN Toast 에 대한 push notification 기능을 node 에서 사용할 수 있게 하는 라이브러리입니다.  ",
   "main": "index.js",
   "dependencies": {
     "node-fetch": "^2.6.1",
@@ -17,14 +17,15 @@
     "eslint-plugin-import": "^2.22.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "prepublish": "npm run compile",
+    "start": "ts-node main.ts"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cokia/nhn-toast-push-api.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Wooyoung Han <hanu@hanukoon.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/cokia/nhn-toast-push-api/issues"
   },
