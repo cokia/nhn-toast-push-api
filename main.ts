@@ -79,4 +79,18 @@ export default class toastPushApi {
   //         "resultMessage" : "success"
   //     }
   // }
+  // get Token info from UID
+  async getTokenInfobyUID(uid:string) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/tokens?uid=${uid}`, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
 }
