@@ -151,5 +151,28 @@ export default class toastPushApi {
   //     ]
   // }
 
+  // remove Token
+  async removeToken(pushType:string, token:string) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/tokens/${token}?pushType=${pushType}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
 
+  // RES
+  //   {
+  //     "header" : {
+  //         "isSuccessful" : true,
+  //         "resultCode" : 0,
+  //         "resultMessage" : "Success."
+  //     }
+  // }
 }
