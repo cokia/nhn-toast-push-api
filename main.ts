@@ -95,6 +95,31 @@ export default class toastPushApi {
     return value;
   }
 
+  // RES
+  //   {
+  //     "tokens": [{
+  //         "pushType" : "FCM",
+  //         "isNotificationAgreement": true,
+  //         "isAdAgreement": true,
+  //         "isNightAdAgreement": true,
+  //         "timezoneId" : "Asia/Seoul",
+  //         "country": "KR",
+  //         "language": "ko",
+  //         "uid" : "User ID",
+  //         "token" : "Token",
+  //         "updatedDateTime": "2017-08-12T01:04:18.000+09:00",
+  //         "adAgreementDateTime": "2017-08-12T01:04:19.000+09:00",
+  //         "nightAdAgreementDateTime": "2017-08-12T01:04:19.000+09:00",
+  //         "deviceId" : "X3LOdJSQdNzCCvcbiSPZTGK1M9srPU5EumRD",
+  //         "activatedDateTime" : "2017-08-12T01:04:19.000+09:00"
+  //     }],
+  //     "header" : {
+  //         "isSuccessful" : true,
+  //         "resultCode": 0,
+  //         "resultMessage" : "success"
+  //     }
+  // }
+
   async getInvaildToken(pageIndex?: number, pageSize?: number, from?: string, to?:string, messageId?: number) {
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/invalid-tokens`, {
       headers: {
@@ -107,5 +132,24 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  }
+  } // TODO : 인자 어떻게 처리할건지 !!
+
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     },
+  //     "invalidTokens" : [{
+  //             "messageId" : 0,
+  //             "uid" : "uid",
+  //             "token" : "invalid-token",
+  //             "pushType" : "FCM",
+  //             "createdDateTime" : "2017-02-08T19:39:04.000+09:00"
+  //         }
+  //     ]
+  // }
+
+
 }
