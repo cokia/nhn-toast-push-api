@@ -3,7 +3,7 @@
 /* eslint-disable import/extensions */
 
 import fetch from 'node-fetch';
-import { ITokenGenerateBodyReq } from './interface';
+import { ITokenGenerateBodyReq, ISendMessageBodyReq } from './interface';
 
 const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
 const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
@@ -173,6 +173,38 @@ export default class toastPushApi {
   //         "isSuccessful" : true,
   //         "resultCode" : 0,
   //         "resultMessage" : "Success."
+  //     }
+  // }
+
+  // MESSAGE
+  // send Message
+
+  async sendMessage(body:ISendMessageBodyReq) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/messages`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+
+  // RES
+  //   {
+  //     "message" : {
+  //         "messageId" : 0,
+  //         "messageIdString": "0"
+  //     },
+  //     "header" : {
+  //         "isSuccessful" : true,
+  //         "resultCode": 0,
+  //         "resultMessage" : "success"
   //     }
   // }
 }
