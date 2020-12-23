@@ -1,6 +1,6 @@
 {
   "name": "nhn-toast-push-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "NHN Toast 에 대한 push notification 기능을 node 에서 사용할 수 있게 하는 라이브러리입니다.  ",
   "main": "index.js",
   "dependencies": {
@@ -21,7 +21,7 @@
     "minorrelease": "npm run build && npm version minor && npm publish",
     "start": "ts-node main.ts",
     "build": "tsc"
-      },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cokia/nhn-toast-push-api.git"
