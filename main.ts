@@ -256,4 +256,48 @@ export default class toastPushApi {
   //     }],
   //     "toatalCount": 1
   // }
+
+  async getMessageInfo(messageId: string) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/messages/${messageId}`, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+  // RES
+  //   {
+  //     "message" : {
+  //         "messageId" : 0,
+  //         "messageIdString": "0",
+  //         "target" : {
+  //         "type" : "ALL"
+  //         },
+  //         "content" : {
+  //             "default" : {
+  //                 "title": "title",
+  //                 "body": "body"
+  //             }
+  //         },
+  //         "messageType" : "AD",
+  //         "contact": "1588-1588",
+  //         "removeGuide": "매뉴 > 설정",
+  //         "timeToLiveMinute": 60,
+  //         "createdDateTime": "2017-02-13T09:30:00.000+09:00",
+  //         "completedDateTime": "2017-02-13T09:30:00.000+09:00",
+  //         "targetCount": 1000,
+  //         "messageStatus": "COMPLETE",
+  //         "provisionedResourceId": "[a-zA-Z0-9]{16}"
+  //     },
+  //     "header" : {
+  //         "isSuccessful" : true,
+  //         "resultCode": 0,
+  //         "resultMessage" : "success"
+  //     }
+  // }
 }
