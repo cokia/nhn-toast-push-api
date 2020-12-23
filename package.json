@@ -17,11 +17,11 @@
     "eslint-plugin-import": "^2.22.1"
   },
   "scripts": {
-    "release": "npm version patch && npm publish",
-    "minorrelease": "npm version minor && npm publish",
+    "release": "npm run build && npm version patch && npm publish",
+    "minorrelease": "npm run build && npm version minor && npm publish",
     "start": "ts-node main.ts",
     "build": "tsc"
-    },
+      },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cokia/nhn-toast-push-api.git"
