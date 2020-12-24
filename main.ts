@@ -3,7 +3,7 @@
 /* eslint-disable import/extensions */
 
 import fetch from 'node-fetch';
-import { ITokenGenerateBodyReq, ISendMessageBodyReq } from './interface';
+import { ITokenGenerateBodyReq, ISendMessageBodyReq, INewReservedMessageScheduleBodyReq } from './interface';
 
 const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
 const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
@@ -270,6 +270,7 @@ export default class toastPushApi {
     const value = await response.json();
     return value;
   }
+
   // RES
   //   {
   //     "message" : {
@@ -300,7 +301,7 @@ export default class toastPushApi {
   //         "resultMessage" : "success"
   //     }
   // }
-
+  // get failed message list
   async getFailedMessageList(messageId?: string, messageErrorType?:string, messageErrorCause?:string, from?: string, to?:string, limit?:number) {
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/message-errors`, {
       headers: {
@@ -343,7 +344,7 @@ export default class toastPushApi {
   //         "resultMessage" : "Success."
   //     }
   // }
-
+  // get log from logging function
   async getLog(messageId?: string, uid?: string, token?: string, pushType?:string, from?:string, to?:string, limit?:number) { // 로깅을 활성화 한 상태에서만 호출 가능
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/logs/message?`, {
       headers: {
@@ -390,4 +391,45 @@ export default class toastPushApi {
   //           }
   //       ]
   //   }
+
+  // new reserved message schedules
+
+  async newReservedMessageSchedule(body: INewReservedMessageScheduleBodyReq) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/schedules`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     },
+  //     "schedules" : [
+  //         "2016-12-01T12:00",
+  //         "2016-12-01T17:00",
+  //         "2016-12-15T12:00",
+  //         "2016-12-15T17:00",
+  //         "2017-01-01T12:00",
+  //         "2017-01-01T17:00",
+  //         "2017-01-15T12:00",
+  //         "2017-01-15T17:00",
+  //         "2017-02-01T12:00",
+  //         "2017-02-01T17:00",
+  //         "2017-02-15T12:00",
+  //         "2017-02-15T17:00"
+  //     ]
+  // }
 }
