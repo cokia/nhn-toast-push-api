@@ -590,4 +590,49 @@ export default class toastPushApi {
   //         "reservationStatus" : "RESERVED"
   //     }
   // }
+
+  // 발송된 예약 메시지 조회
+  async sentReservedMessageInformation(reservationId:string, pageIndex?:number, pageSize?:number) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations/${reservationId}/messages`, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     },
+  //     "messages" : [{
+  //             "messageId" : 356125922591162,
+  //             "messageIdString" : "356125922591162",
+  //             "target" : {
+  //                 "type" : "ALL",
+  //                 "pushTypes" : ["FCM", "APNS", "APNS_SANDBOX", "TENCENT", "ADM"]
+  //             },
+  //             "content" : {
+  //                 "default" : {
+  //                     "title" : "6시 55분 예약 메시지",
+  //                     "body" : "API v2"
+  //                 }
+  //             },
+  //             "messageType" : "NOTIFICATION",
+  //             "createdDateTime" : "2017-04-05T18:55:00.000+09:00",
+  //             "completedDateTime" : "2017-04-05T18:55:00.000+09:00",
+  //             "targetCount" : 38,
+  //             "sentCount" : 38,
+  //             "messageStatus" : "COMPLETE"
+  //         }
+  //     ],
+  //     "totalCount" : 1
+  // }
 }
