@@ -468,6 +468,7 @@ export default class toastPushApi {
 
   // list of reservation messages
   async reservedMessageList(pageIndex?:number, pageSize?:number, from?:string, to?:string, reservationStatus?:string) {
+    
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations`, {
       method: 'POST',
       headers: {
@@ -640,6 +641,31 @@ export default class toastPushApi {
   async editReservedMessage(reservationId:string, body:IEditReservedMessageBodyReq) {
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations/${reservationId}`, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     }
+  // }
+
+  // 예약 메시지 삭제
+  async removeReservedMessage(reservationId:string, body:IEditReservedMessageBodyReq) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations/?reservationIds${reservationId}`, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'X-Secret-Key': `${this.secretKey}`,
