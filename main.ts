@@ -3,7 +3,9 @@
 /* eslint-disable import/extensions */
 
 import fetch from 'node-fetch';
-import { ITokenGenerateBodyReq, ISendMessageBodyReq, INewReservedMessageScheduleBodyReq } from './interface';
+import {
+  ITokenGenerateBodyReq, ISendMessageBodyReq, INewReservedMessageScheduleBodyReq, INewReservedMessageBodyReq,
+} from './interface';
 
 const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
 const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
@@ -431,5 +433,36 @@ export default class toastPushApi {
   //         "2017-02-15T12:00",
   //         "2017-02-15T17:00"
   //     ]
+  // }
+
+  // new reserved message
+
+  async newReservedMessage(body: INewReservedMessageBodyReq) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     },
+  //     "reservation" : {
+  //         "reservationId": 666810348995587,
+  //         "reservationIdString": "666810348995587"
+  //     }
   // }
 }
