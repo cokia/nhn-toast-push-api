@@ -4,7 +4,7 @@
 
 import fetch from 'node-fetch';
 import {
-  ITokenGenerateBodyReq, ISendMessageBodyReq, INewReservedMessageScheduleBodyReq, INewReservedMessageBodyReq,
+  ITokenGenerateBodyReq, ISendMessageBodyReq, INewReservedMessageScheduleBodyReq, INewReservedMessageBodyReq, IEditReservedMessageBodyReq,
 } from './interface';
 
 const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
@@ -634,5 +634,30 @@ export default class toastPushApi {
   //         }
   //     ],
   //     "totalCount" : 1
+  // }
+
+  // 발송된 예약 메시지 수정
+  async editReservedMessage(reservationId:string, body:IEditReservedMessageBodyReq) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations/${reservationId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     }
   // }
 }
