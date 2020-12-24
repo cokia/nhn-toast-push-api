@@ -39,3 +39,12 @@ export interface ISendMessageBodyReq {
     adWordPosition?: string, // 'TITLE', 'BODY' 광고 표시 문구 위치. 기본 값은 'TITLE' 입니다.
     statsId?: string
   }
+
+export interface INewReservedMessageSchedualBodyReq {
+    type:string,
+    fromDate:string,
+    toDate :string,
+    times : string[] | string,
+    days?: number[]
+    daysOfWeek?: string[]
+  }
