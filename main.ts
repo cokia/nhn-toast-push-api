@@ -314,4 +314,80 @@ export default class toastPushApi {
     const value = await response.json();
     return value;
   } // TODO : 인자 어떻게 처리할건지 !!
+
+  // RES
+  //   {
+  //     "messageErrors" : [{
+  //             "messageId" : 0,
+  //             "messageIdString" : "0",
+  //             "pushType" : "FCM",
+  //             "messageErrorType" : "ClientError",
+  //             "messageErrorCause" : "INVALID_CERTIFICATE",
+  //             "payload" : {
+  //                 "data" : {
+  //                     "title" : "title",
+  //                     "body" : "body"
+  //                 }
+  //             },
+  //             "createdDateTime" : "2017-05-18T15:47:00.000+09:00",
+  //             "tokens" : [{
+  //                     "uid" : "uid-1",
+  //                     "token" : "token-1"
+  //                 }
+  //             ]
+  //         }
+  //     ],
+  //     "header" : {
+  //         "isSuccessful" : true,
+  //         "resultCode" : 0,
+  //         "resultMessage" : "Success."
+  //     }
+  // }
+
+  async getLog(messageId?: string, uid?: string, token?: string, pushType?:string, from?:string, to?:string, limit?:number) { // 로깅을 활성화 한 상태에서만 호출 가능
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/logs/message?`, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  } // TODO: 인자 처리 어떻게 할지
+
+  // RES
+
+  // {
+  //   "header" : {
+  //       "resultCode" : 0,
+  //       "resultMessage" : "success",
+  //       "isSuccessful" : true
+  //   },
+  //   "data" : {
+  //       "count" : 0,
+  //       "logs" : [{
+  //               "logType" : "message-result",
+  //               "logSource" : "tc-push",
+  //               "messageId" : "1",
+  //               "body" : "{\"tokens\":[{\"uid\":\"gimbimloki\",\"token\":\"1\"}],\"payload\":{\"aps\":{\"alert\":{\"title\":\"title\",\"body\":\"body\"},\"mutable-content\":1}}}",
+  //               "logTime" : "1",
+  //               "pushType" : "APNS",
+  //               "sendTime" : "1",
+  //                               "searchKey1": "1746041784729856",
+  //                           "searchKey2": "FCM",
+  //                           "searchKey3": "SENT",
+  //               "sentResult" : "SENT",
+  //               "host" : "127.0.0.1",
+  //               "appkey" : "APP_KEY",
+  //               "logVersion" : "v2",
+  //               "isNeedStored" : "bulk",
+  //               "projectName" : "L&CS_APP_KEY",
+  //               "SinkVersion" : "-",
+  //               "projectVersion" : "v2.2"
+  //           }
+  //       ]
+  //   }
 }
