@@ -40,11 +40,31 @@ export interface ISendMessageBodyReq {
     statsId?: string
   }
 
-export interface INewReservedMessageSchedualBodyReq {
+export interface INewReservedMessageScheduleBodyReq {
     type:string,
     fromDate:string,
     toDate :string,
     times : string[] | string,
     days?: number[]
     daysOfWeek?: string[]
+  }
+
+export interface INewReservedMessageBodyReq {
+    schedules: string[],
+    isLocalTime : Boolean,
+    target? : {
+        type? : string,
+        to?: string[],
+    },
+    content? : {
+        default? : {
+            title: string,
+            body: string,
+        }
+    },
+    messageType? : string,
+    contact?: string,
+    removeGuide?: string,
+    timeToLiveMinute: number,
+    provisionedResourceId: string,
   }
