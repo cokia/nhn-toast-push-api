@@ -8,7 +8,7 @@ import {
 } from './interface';
 
 const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
-const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
+// const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
 export default class toastPushApi {
   appKey: string;
 
@@ -464,5 +464,69 @@ export default class toastPushApi {
   //         "reservationId": 666810348995587,
   //         "reservationIdString": "666810348995587"
   //     }
+  // }
+
+  // list of reservation messages
+  async reservedMessageList(pageIndex?:number, pageSize?:number, from?:string, to?:string, reservationStatus?:string) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+
+  // RES
+  //   {
+  //     "header" : {
+  //         "resultCode" : 0,
+  //         "resultMessage" : "success",
+  //         "isSuccessful" : true
+  //     },
+  //     "reservations" : [{
+  //             "reservationId" : 666810348995587,
+  //             "reservationIdString" : "666810348995587",
+  //             "schedules" : [{
+  //                     "scheduleId" : 2455708,
+  //                     "scheduleIdString" : "2455708",
+  //                     "reservationId" : 666810348995587,
+  //                     "reservationIdString" : "666810348995587",
+  //                     "deliveryDateTime" : "2016-12-30T12:40:00.000+09:00",
+  //                     "timezoneOffset" : 0,
+  //                     "scheduleStatus" : "READY"
+  //                 }
+  //             ],
+  //             "isLocalTime" : false,
+  //             "target" : {
+  //                 "type" : "UID",
+  //                 "to" : [
+  //                     "uid"
+  //                 ]
+  //             },
+  //             "content" : {
+  //                 "default" : {
+  //                     "title" : "default title",
+  //                     "body" : "default body"
+  //                 },
+  //                 "ko" : {
+  //                     "title" : "한국어 제목",
+  //                     "body" : "한국어 내용"
+  //                 }
+  //             },
+  //             "messageType" : "NOTIFICATION",
+  //             "timeToLiveMinute" : 60,
+  //             "createdDateTime" : "2016-12-30T10:34:40.000+09:00",
+  //             "updatedDateTime" : "2016-12-30T10:34:40.000+09:00",
+  //             "completedDateTime" : "2016-12-30T10:34:40.000+09:00",
+  //             "reservationStatus" : "RESERVED"
+  //         }
+  //     ],
+  //     "totalCount" : 1
   // }
 }
