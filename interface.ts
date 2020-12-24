@@ -68,3 +68,23 @@ export interface INewReservedMessageBodyReq {
     timeToLiveMinute: number,
     provisionedResourceId: string,
   }
+
+export interface IEditReservedMessageBodyReq{
+      schedules : string[] | string
+      target? : {
+          type? : string[] | string,
+          to? : string[] | string
+      },
+      content? : {
+          default? : {
+              title? : string,
+              body? : string
+          },
+          ko? : {
+              title? : string,
+              body? : string
+          }
+      },
+      isLocalTime? : Boolean,
+      messageType? : string,
+  }
