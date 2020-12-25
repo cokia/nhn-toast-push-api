@@ -236,7 +236,7 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  } // TODO : 인자 어떻게 처리할건지 !!
+  } 
 
   // RES
   //   {
