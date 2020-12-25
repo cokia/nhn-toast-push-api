@@ -88,3 +88,8 @@ export interface IEditReservedMessageBodyReq{
       isLocalTime? : Boolean,
       messageType? : string,
   }
+
+export interface INewTagBodyReq{
+      tagName : string
+  }
+
