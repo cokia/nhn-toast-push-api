@@ -236,7 +236,7 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  } 
+  }
 
   // RES
   //   {
@@ -317,7 +317,12 @@ export default class toastPushApi {
   // }
   // get failed message list
   async getFailedMessageList(messageId?: string, messageErrorType?:string, messageErrorCause?:string, from?: string, to?:string, limit?:number) {
-    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/message-errors`, {
+    const queryparam = await queryString.stringify({
+      messageId, messageErrorType, messageErrorCause, from, to, limit,
+    }, {
+      skipNull: true,
+    });
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/message-errors?${queryparam}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'X-Secret-Key': `${this.secretKey}`,
@@ -328,7 +333,7 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  } // TODO : 인자 어떻게 처리할건지 !!
+  }
 
   // RES
   //   {
