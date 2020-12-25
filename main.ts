@@ -739,6 +739,7 @@ export default class toastPushApi {
   //         "tagId" :  "12345678"
   //     }
   // }
+
   async appendUidToTag(tagId:string, body:INewTagBodyReq) {
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/tags/${tagId}/uids`, {
       method: 'POST',
@@ -762,5 +763,36 @@ export default class toastPushApi {
   //         "resultCode" :  0,
   //         "resultMessage" :  "success"
   //     }
+  // }
+  async getTagsInfo(tagName:string) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/tags?tagName=${tagName}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+
+  // RES
+  //   {
+  //     "header" : {
+  //         "isSuccessful" :  true,
+  //         "resultCode" :  0,
+  //         "resultMessage" :  "success"
+  //     },
+  //     "tags" : [
+  //         {
+  //             "tagId" :  "12345678",
+  //             "tagName" :  "tagName",
+  //             "createdDateTime" :  "2017-07-07T07:07:07.777+09:00",
+  //             "updatedDateTime" :  "2017-07-07T07:07:07.777+09:00"
+  //         }
+  //     ]
   // }
 }
