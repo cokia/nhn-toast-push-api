@@ -711,4 +711,32 @@ export default class toastPushApi {
   //         "isSuccessful" : true
   //     }
   // }
+
+  async newTag(body:INewTagBodyReq) {
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/tags`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'X-Secret-Key': `${this.secretKey}`,
+      },
+      body: JSON.stringify(body),
+    });
+    if (await response.status !== 200) {
+      return (`${await response.status}, ${await response.body} `);
+    }
+    const value = await response.json();
+    return value;
+  }
+
+  // RES
+  //   {
+  //     "header" : {
+  //         "isSuccessful" :  true,
+  //         "resultCode" :  0,
+  //         "resultMessage" :  "success"
+  //     },
+  //     "tag" : {
+  //         "tagId" :  "12345678"
+  //     }
+  // }
 }
