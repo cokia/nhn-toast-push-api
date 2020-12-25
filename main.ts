@@ -475,7 +475,12 @@ export default class toastPushApi {
 
   // list of reservation messages
   async reservedMessageList(pageIndex?:number, pageSize?:number, from?:string, to?:string, reservationStatus?:string) {
-    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations`, {
+    const queryparam = await queryString.stringify({
+      pageIndex, pageSize, from, to, reservationStatus,
+    }, {
+      skipNull: true,
+    });
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations?${queryparam}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
