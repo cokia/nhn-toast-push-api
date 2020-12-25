@@ -92,3 +92,7 @@ export interface IEditReservedMessageBodyReq{
 export interface INewTagBodyReq{
       tagName : string
   }
+
+export interface IAppendUidToTagBodyReq{
+    uids : string[]
+}
