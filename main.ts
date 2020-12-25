@@ -7,6 +7,8 @@ import {
   ITokenGenerateBodyReq, ISendMessageBodyReq, INewReservedMessageScheduleBodyReq, INewReservedMessageBodyReq, IEditReservedMessageBodyReq,
 } from './interface';
 
+const queryString = require('query-string');
+
 const toastBasicEndpoint = 'https://api-push.cloud.toast.com/push/v2.4/appkeys/';
 // const toastPushCheckEndpoint = 'https://collector-push.cloud.toast.com';
 export default class toastPushApi {
@@ -123,7 +125,12 @@ export default class toastPushApi {
   // }
 
   async getInvaildToken(pageIndex?: number, pageSize?: number, from?: string, to?:string, messageId?: number) {
-    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/invalid-tokens`, {
+    const queryparam = await queryString.stringify({
+      pageSize, from, to, messageId,
+    }, {
+      skipNull: true,
+    });
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/invalid-tokens?${queryparam}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'X-Secret-Key': `${this.secretKey}`,
@@ -134,7 +141,7 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  } // TODO : 인자 어떻게 처리할건지 !!
+  }
 
   // RES
   //   {
@@ -468,7 +475,6 @@ export default class toastPushApi {
 
   // list of reservation messages
   async reservedMessageList(pageIndex?:number, pageSize?:number, from?:string, to?:string, reservationStatus?:string) {
-    
     const response = await fetch(`${toastBasicEndpoint}${this.appKey}/reservations`, {
       method: 'POST',
       headers: {
