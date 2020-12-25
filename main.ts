@@ -355,7 +355,12 @@ export default class toastPushApi {
   // }
   // get log from logging function
   async getLog(messageId?: string, uid?: string, token?: string, pushType?:string, from?:string, to?:string, limit?:number) { // 로깅을 활성화 한 상태에서만 호출 가능
-    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/logs/message?`, {
+    const queryparam = await queryString.stringify({
+      messageId, uid, token, pushType, from, to, limit,
+    }, {
+      skipNull: true,
+    });
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/logs/message?${queryparam}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'X-Secret-Key': `${this.secretKey}`,
@@ -366,7 +371,7 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  } // TODO: 인자 처리 어떻게 할지
+  }
 
   // RES
 
@@ -492,8 +497,7 @@ export default class toastPushApi {
     }
     const value = await response.json();
     return value;
-  } // TODO parameter optional
-
+  }
   // RES
   //   {
   //     "header" : {
