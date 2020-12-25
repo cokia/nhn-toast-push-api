@@ -220,7 +220,12 @@ export default class toastPushApi {
   // messageList
 
   async getMessageList(pageIndex?: number, pageSize?: number, from?: string, to?:string, deliveryType?: string, messageStatus?: string) {
-    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/messages`, {
+    const queryparam = await queryString.stringify({
+      pageIndex, pageSize, from, to, deliveryType, messageStatus,
+    }, {
+      skipNull: true,
+    });
+    const response = await fetch(`${toastBasicEndpoint}${this.appKey}/messages?${queryparam}`, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'X-Secret-Key': `${this.secretKey}`,
